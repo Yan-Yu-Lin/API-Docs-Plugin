@@ -1,0 +1,13 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Claude Code
+*.log
+.claude-cache/
+
+# Temporary files
+*.tmp
+*.swp
+*~

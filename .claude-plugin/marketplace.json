@@ -1,0 +1,24 @@
+{
+  "name": "api-docs",
+  "owner": {
+    "name": "Yan-Yu-Lin",
+    "email": "arthur.lin.0906@gmail.com"
+  },
+  "metadata": {
+    "description": "Comprehensive marketplace for API documentation and SDK expertise skills",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "openai",
+      "source": "./openai",
+      "description": "OpenAI API documentation and SDK expertise, including Agent SDK",
+      "version": "1.0.0",
+      "author": {
+        "name": "Yan-Yu-Lin"
+      },
+      "keywords": ["openai", "api", "sdk", "agent", "ai"],
+      "category": "api-documentation"
+    }
+  ]
+}

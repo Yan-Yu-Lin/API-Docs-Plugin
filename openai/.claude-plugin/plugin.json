@@ -1,0 +1,18 @@
+{
+  "name": "openai",
+  "version": "1.0.0",
+  "description": "OpenAI API documentation and SDK expertise, including Agent SDK knowledge",
+  "author": {
+    "name": "Yan-Yu-Lin",
+    "email": "arthur.lin.0906@gmail.com"
+  },
+  "keywords": [
+    "openai",
+    "api",
+    "sdk",
+    "agent",
+    "ai",
+    "documentation"
+  ],
+  "license": "MIT"
+}
