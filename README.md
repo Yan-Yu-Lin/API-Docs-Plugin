@@ -15,6 +15,13 @@ Expert knowledge about OpenAI APIs and SDKs.
 **Skills included:**
 - `openai-agent-sdk` - Comprehensive knowledge of OpenAI Agent SDK
 
+### Anthropic Plugin
+
+Expert knowledge about Anthropic APIs and protocols.
+
+**Skills included:**
+- `model-context-protocol` - Comprehensive knowledge of Model Context Protocol (MCP)
+
 ## Installation
 
 Add this marketplace to Claude Code:
@@ -23,10 +30,11 @@ Add this marketplace to Claude Code:
 /plugin marketplace add Yan-Yu-Lin/API-Docs-Plugin
 ```
 
-Then install the OpenAI plugin:
+Then install plugins:
 
 ```bash
 /plugin install openai@api-docs
+/plugin install anthropic@api-docs
 ```
 
 ## Development

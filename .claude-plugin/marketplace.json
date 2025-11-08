@@ -19,6 +19,17 @@
       },
       "keywords": ["openai", "api", "sdk", "agent", "ai"],
       "category": "api-documentation"
+    },
+    {
+      "name": "anthropic",
+      "source": "./anthropic",
+      "description": "Anthropic API documentation and MCP expertise, including Model Context Protocol",
+      "version": "1.0.0",
+      "author": {
+        "name": "Yan-Yu-Lin"
+      },
+      "keywords": ["anthropic", "api", "mcp", "model-context-protocol", "ai"],
+      "category": "api-documentation"
     }
   ]
 }
