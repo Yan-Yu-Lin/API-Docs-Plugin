@@ -30,6 +30,28 @@
       },
       "keywords": ["anthropic", "api", "mcp", "model-context-protocol", "ai"],
       "category": "api-documentation"
+    },
+    {
+      "name": "vercel",
+      "source": "./vercel",
+      "description": "Vercel AI SDK documentation for building AI applications with React, Next.js, Vue, Svelte, and Node.js",
+      "version": "1.0.0",
+      "author": {
+        "name": "Yan-Yu-Lin"
+      },
+      "keywords": ["vercel", "ai-sdk", "react", "nextjs", "streaming", "ai"],
+      "category": "api-documentation"
+    },
+    {
+      "name": "openrouter",
+      "source": "./openrouter",
+      "description": "OpenRouter API documentation for unified access to 400+ AI models with routing, fallbacks, and provider selection",
+      "version": "1.0.0",
+      "author": {
+        "name": "Yan-Yu-Lin"
+      },
+      "keywords": ["openrouter", "api", "llm", "routing", "providers", "ai"],
+      "category": "api-documentation"
     }
   ]
 }
