@@ -25,7 +25,8 @@ def scan_md_files(root_dir: str) -> list[tuple[int, str]]:
 
 
 def main():
-    refs_dir = "vercel/skills/vercel-ai-sdk/references"
+    import sys
+    refs_dir = sys.argv[1] if len(sys.argv) > 1 else "vercel/skills/vercel-ai-sdk/references"
 
     print(f"Scanning: {refs_dir}\n")
     print(f"{'Lines':>6}  File")
