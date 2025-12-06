@@ -1,414 +1,174 @@
-# Change Tracking
+# Stealth Mode
 
-> Firecrawl can track changes between the current page and a previous version, and tell you if it updated or not
+> Use stealth proxies for sites with advanced anti-bot solutions
 
-<img src="https://mintcdn.com/firecrawl/vlKm1oZYK3oSRVTM/images/launch-week/lw3d12.webp?fit=max&auto=format&n=vlKm1oZYK3oSRVTM&q=85&s=cc56c24d15e1b2ed4806ddb66d0f5c3f" alt="Change Tracking" data-og-width="2400" width="2400" data-og-height="1350" height="1350" data-path="images/launch-week/lw3d12.webp" data-optimize="true" data-opv="3" srcset="https://mintcdn.com/firecrawl/vlKm1oZYK3oSRVTM/images/launch-week/lw3d12.webp?w=280&fit=max&auto=format&n=vlKm1oZYK3oSRVTM&q=85&s=2f46113bc318badaeaf0fb32e7645df8 280w, https://mintcdn.com/firecrawl/vlKm1oZYK3oSRVTM/images/launch-week/lw3d12.webp?w=560&fit=max&auto=format&n=vlKm1oZYK3oSRVTM&q=85&s=2fd31b621bcb393815715ce8fe1e5abd 560w, https://mintcdn.com/firecrawl/vlKm1oZYK3oSRVTM/images/launch-week/lw3d12.webp?w=840&fit=max&auto=format&n=vlKm1oZYK3oSRVTM&q=85&s=2423ca2755bdb28f4d3e64e1abffebf6 840w, https://mintcdn.com/firecrawl/vlKm1oZYK3oSRVTM/images/launch-week/lw3d12.webp?w=1100&fit=max&auto=format&n=vlKm1oZYK3oSRVTM&q=85&s=cc14d2752f8888824b84ea121fcbbb7d 1100w, https://mintcdn.com/firecrawl/vlKm1oZYK3oSRVTM/images/launch-week/lw3d12.webp?w=1650&fit=max&auto=format&n=vlKm1oZYK3oSRVTM&q=85&s=2e8a59b9d8f69c378551f4c5ff20e13d 1650w, https://mintcdn.com/firecrawl/vlKm1oZYK3oSRVTM/images/launch-week/lw3d12.webp?w=2500&fit=max&auto=format&n=vlKm1oZYK3oSRVTM&q=85&s=830c7f2a9465d9f6f3733a5289a5e9fe 2500w" />
+Firecrawl provides different proxy types to help you scrape websites with varying levels of anti-bot protection. The proxy type can be specified using the `proxy` parameter.
 
-Change tracking allows you to monitor and detect changes in web content over time. This feature is available in both the JavaScript and Python SDKs.
+### Proxy Types
 
-## Overview
+Firecrawl supports three types of proxies:
 
-Change tracking enables you to:
+* **basic**: Proxies for scraping sites with none to basic anti-bot solutions. Fast and usually works.
+* **stealth**: Stealth proxies for scraping sites with advanced anti-bot solutions. Slower, but more reliable on certain sites.
+* **auto**: Firecrawl will automatically retry scraping with stealth proxies if the basic proxy fails. If the retry with stealth is successful, 5 credits will be billed for the scrape. If the first attempt with basic is successful, only the regular cost will be billed.
 
-* Detect if a webpage has changed since the last scrape
-* View the specific changes between scrapes
-* Get structured data about what has changed
-* Control the visibility of changes
+If you do not specify a proxy, Firecrawl will default to auto.
 
-Using the `changeTracking` format, you can monitor changes on a website and receive information about:
+### Using Stealth Mode
 
-* `previousScrapeAt`: The timestamp of the previous scrape that the current page is being compared against (`null` if no previous scrape)
-* `changeStatus`: The result of the comparison between the two page versions
-  * `new`: This page did not exist or was not discovered before (usually has a `null` `previousScrapeAt`)
-  * `same`: This page's content has not changed since the last scrape
-  * `changed`: This page's content has changed since the last scrape
-  * `removed`: This page was removed since the last scrape
-* `visibility`: The visibility of the current page/URL
-  * `visible`: This page is visible, meaning that its URL was discovered through an organic route (through links on other visible pages or the sitemap)
-  * `hidden`: This page is not visible, meaning it is still available on the web, but no longer discoverable via the sitemap or crawling the site. We can only identify invisible links if they had been visible, and captured, during a previous crawl or scrape
-
-## SDKs
-
-### Basic Usage
-
-To use change tracking, include `'changeTracking'` in the formats when scraping a URL:
+When scraping websites with advanced anti-bot protection, you can use the stealth proxy mode to improve your success rate.
 
 <CodeGroup>
-  ```js Node theme={null}
-  const firecrawl = new Firecrawl({ apiKey: 'your-api-key' });
-  const result = await firecrawl.scrape('https://example.com', {
-    formats: ['markdown', 'changeTracking']
-  });
-
-  // Access change tracking data
-  console.log(result.changeTracking)
-  ```
-
   ```python Python theme={null}
   from firecrawl import Firecrawl
-  from pydantic import BaseModel
 
-  firecrawl = Firecrawl(api_key='your-api-key')
-  result = firecrawl.scrape('https://example.com',
-      formats=['markdown', 'change_tracking']
-  )
+  firecrawl = Firecrawl(api_key='fc-YOUR-API-KEY')
 
-  # Access change tracking data
-  print("Change Tracking:", result.change_tracking)
+  # Choose proxy strategy: 'basic' | 'stealth' | 'auto'
+  doc = firecrawl.scrape('https://example.com', formats=['markdown'], proxy='auto')
+
+  print(doc.warning or 'ok')
   ```
-</CodeGroup>
 
-Example Response:
-
-```json  theme={null}
-{
-  "url": "https://firecrawl.dev",
-  "markdown": "# AI Agents for great customer experiences\n\nChatbots that delight your users...",
-  "changeTracking": {
-    "previousScrapeAt": "2025-04-10T12:00:00Z",
-    "changeStatus": "changed",
-    "visibility": "visible"
-  }
-}
-```
-
-### Advanced Options
-
-You can configure change tracking by passing an object in the `formats` array:
-
-<CodeGroup>
   ```js Node theme={null}
-  const result = await firecrawl.scrape('https://example.com', {
-    formats: [
-      'markdown',
-      {
-        type: 'changeTracking',
-        modes: ['git-diff', 'json'], // Enable specific change tracking modes
-        schema: {
-          type: 'object',
-          properties: {
-            title: { type: 'string' },
-            content: { type: 'string' }
-          }
-        }, // Schema for structured JSON comparison
-        prompt: 'Custom prompt for extraction', // Optional custom prompt
-        tag: 'production' // Optional tag for separate change tracking histories
-      }
-    ]
+  import Firecrawl from '@mendable/firecrawl-js';
+
+  const firecrawl = new Firecrawl({ apiKey: "fc-YOUR-API-KEY" });
+
+  // Choose proxy strategy: 'basic' | 'stealth' | 'auto'
+  const doc = await firecrawl.scrape('https://example.com', {
+    formats: ['markdown'],
+    proxy: 'auto'
   });
 
-  // Access git-diff format changes
-  if (result.changeTracking.diff) {
-    console.log(result.changeTracking.diff.text); // Git-style diff text
-    console.log(result.changeTracking.diff.json); // Structured diff data
-  }
-
-  // Access JSON comparison changes
-  if (result.changeTracking.json) {
-    console.log(result.changeTracking.json.title.previous); // Previous title
-    console.log(result.changeTracking.json.title.current); // Current title
-  }
+  console.log(doc.warning || 'ok');
   ```
 
-  ```python Python theme={null}
-  result = firecrawl.scrape('https://example.com',
-      formats=[
-          'markdown',
-          {
-              'type': 'change_tracking',
-              'modes': ['git-diff', 'json'],  # Enable specific change tracking modes
-              'schema': {
-                  'type': 'object',
-                  'properties': {
-                      'title': {'type': 'string'},
-                      'content': {'type': 'string'}
-                  }
-              },  # Schema for structured JSON comparison
-              'prompt': 'Custom prompt for extraction',  # Optional custom prompt
-              'tag': 'production'  # Optional tag for separate change tracking histories
-          }
-      ]
-  )
+  ```bash cURL theme={null}
 
-  # Access git-diff format changes
-  if 'diff' in result.change_tracking:
-      print(result.change_tracking.diff.text)  # Git-style diff text
-      print(result.change_tracking.diff.json)  # Structured diff data
+  // Choose proxy strategy: 'basic' | 'stealth' | 'auto'
+  curl -X POST https://api.firecrawl.dev/v2/scrape \
+      -H 'Content-Type: application/json' \
+      -H 'Authorization: Bearer fc-YOUR-API-KEY' \
+      -d '{
+        "url": "https://example.com",
+        "proxy": "auto"
+      }'
 
-  # Access JSON comparison changes
-  if 'json' in result.change_tracking:
-      print(result.change_tracking.json.title.previous)  # Previous title
-      print(result.change_tracking.json.title.current)  # Current title
   ```
 </CodeGroup>
 
-### Git-Diff Results Example:
+**Note:** Stealth proxy requests cost 5 credits per request when used.
 
-```
- **April, 13 2025**
- 
--**05:55:05 PM**
-+**05:58:57 PM**
+## Using Stealth as a Retry Mechanism
 
-...
-```
-
-### JSON Comparison Results Example:
-
-```json  theme={null}
-{
-  "time": { 
-    "previous": "2025-04-13T17:54:32Z", 
-    "current": "2025-04-13T17:55:05Z" 
-  }
-}
-```
-
-### Data Models
-
-The change tracking feature includes the following data models:
+A common pattern is to first try scraping with the default proxy settings, and then retry with stealth mode if you encounter specific error status codes (401, 403, or 500) in the `metadata.statusCode` field of the response. These status codes can be indicative of the website blocking your request.
 
 <CodeGroup>
-  ```js Node theme={null}
-  interface FirecrawlDocument {
-    // ... other properties
-    changeTracking?: {
-      previousScrapeAt: string | null;
-      changeStatus: "new" | "same" | "changed" | "removed";
-      visibility: "visible" | "hidden";
-      diff?: {
-        text: string;
-        json: {
-          files: Array<{
-            from: string | null;
-            to: string | null;
-            chunks: Array<{
-              content: string;
-              changes: Array<{
-                type: string;
-                normal?: boolean;
-                ln?: number;
-                ln1?: number;
-                ln2?: number;
-                content: string;
-              }>;
-            }>;
-          }>;
-        };
-      };
-      json?: any;
-    };
-  }
-
-  interface ChangeTrackingFormat {
-    type: 'changeTracking';
-    prompt?: string;
-    schema?: any;
-    modes?: ("json" | "git-diff")[];
-    tag?: string | null;
-  }
-
-  interface ScrapeParams {
-    // ... other properties
-    formats?: Array<'markdown' | 'html' | ChangeTrackingFormat>;
-  }
-  ```
-
   ```python Python theme={null}
-  class ChangeTrackingData(BaseModel):
-      """
-      Data for the change tracking format.
-      """
-      previous_scrape_at: Optional[str] = None
-      change_status: str  # "new" | "same" | "changed" | "removed"
-      visibility: str  # "visible" | "hidden"
-      diff: Optional[Dict[str, Any]] = None
-      json: Optional[Dict[str, Any]] = None
+  # pip install firecrawl-py
+
+  from firecrawl import Firecrawl
+
+  firecrawl = Firecrawl(api_key="YOUR_API_KEY")
+
+  # First try with basic proxy
+  try:
+      content = firecrawl.scrape("https://example.com")
+      
+      # Check if we got an error status code
+      status_code = content.get("metadata", {}).get("statusCode")
+      if status_code in [401, 403, 500]:
+          print(f"Got status code {status_code}, retrying with stealth proxy")
+          # Retry with stealth proxy
+          content = firecrawl.scrape("https://example.com", proxy="stealth")
+      
+      print(content["markdown"])
+  except Exception as e:
+      print(f"Error: {e}")
+      # Retry with stealth proxy on exception
+      try:
+          content = firecrawl.scrape("https://example.com", proxy="stealth")
+          print(content["markdown"])
+      except Exception as e:
+          print(f"Stealth proxy also failed: {e}")
   ```
-</CodeGroup>
 
-## Change Tracking Modes
+  ```js Node theme={null}
+  // npm install @mendable/firecrawl-js
 
-The change tracking feature supports two modes:
+  import { Firecrawl } from '@mendable/firecrawl-js';
 
-### Git-Diff Mode
+  const firecrawl = new Firecrawl({ apiKey: 'YOUR_API_KEY' });
 
-The `git-diff` mode provides a traditional diff format similar to Git's output. It shows line-by-line changes with additions and deletions marked.
-
-Example output:
-
-```
-@@ -1,1 +1,1 @@
--old content
-+new content
-```
-
-The structured JSON representation of the diff includes:
-
-* `files`: Array of changed files (in web context, typically just one)
-* `chunks`: Sections of changes within a file
-* `changes`: Individual line changes with type (add, delete, normal)
-
-### JSON Mode
-
-The `json` mode provides a structured comparison of specific fields extracted from the content. This is useful for tracking changes in specific data points rather than the entire content.
-
-Example output:
-
-```json  theme={null}
-{
-  "title": {
-    "previous": "Old Title",
-    "current": "New Title"
-  },
-  "price": {
-    "previous": "$19.99",
-    "current": "$24.99"
-  }
-}
-```
-
-To use JSON mode, you need to provide a schema that defines the fields to extract and compare.
-
-## Important Facts
-
-Here are some important details to know when using the change tracking feature:
-
-* **Comparison Method**: Scrapes are always compared via their markdown response.
-  * The `markdown` format must also be specified when using the `changeTracking` format. Other formats may also be specified in addition.
-  * The comparison algorithm is resistant to changes in whitespace and content order. iframe source URLs are currently ignored for resistance against captchas and antibots with randomized URLs.
-
-* **Matching Previous Scrapes**: Previous scrapes to compare against are currently matched on the source URL, the team ID, the `markdown` format, and the `tag` parameter.
-  * For an effective comparison, the input URL should be exactly the same as the previous request for the same content.
-  * Crawling the same URLs with different `includePaths`/`excludePaths` will have inconsistencies when using `changeTracking`.
-  * Scraping the same URLs with different `includeTags`/`excludeTags`/`onlyMainContent` will have inconsistencies when using `changeTracking`.
-  * Compared pages will also be compared against previous scrapes that only have the `markdown` format without the `changeTracking` format.
-  * Comparisons are scoped to your team. If you scrape a URL for the first time with your API key, its `changeStatus` will always be `new`, even if other Firecrawl users have scraped it before.
-
-* **Beta Status**: While in Beta, it is recommended to monitor the `warning` field of the resulting document, and to handle the `changeTracking` object potentially missing from the response.
-  * This may occur when the database lookup to find the previous scrape to compare against times out.
-
-## Examples
-
-### Basic Scrape Example
-
-```json  theme={null}
-// Request
-{
-    "url": "https://firecrawl.dev",
-    "formats": ["markdown", "changeTracking"]
-}
-
-// Response
-{
-  "success": true,
-  "data": {
-    "markdown": "...",
-    "metadata": {...},
-    "changeTracking": {
-      "previousScrapeAt": "2025-03-30T15:07:17.543071+00:00",
-      "changeStatus": "same",
-      "visibility": "visible"
+  // Function to scrape with retry logic
+  async function scrapeWithRetry(url) {
+    try {
+      // First try with default proxy
+      const content = await firecrawl.scrape(url);
+      
+      // Check if we got an error status code
+      const statusCode = content?.metadata?.statusCode;
+      if ([401, 403, 500].includes(statusCode)) {
+        console.log(`Got status code ${statusCode}, retrying with stealth proxy`);
+        // Retry with stealth proxy
+        return await firecrawl.scrape(url, {
+          proxy: 'stealth'
+        });
+      }
+      
+      return content;
+    } catch (error) {
+      console.error(`Error: ${error.message}`);
+      // Retry with stealth proxy on exception
+      try {
+        return await firecrawl.scrape(url, {
+          proxy: 'stealth'
+        });
+      } catch (retryError) {
+        console.error(`Stealth proxy also failed: ${retryError.message}`);
+        throw retryError;
+      }
     }
   }
-}
-```
 
-### Crawl Example
-
-```json  theme={null}
-// Request
-{
-    "url": "https://firecrawl.dev",
-    "scrapeOptions": {
-        "formats": ["markdown", "changeTracking"]
-    }
-}
-```
-
-### Tracking Product Price Changes
-
-<CodeGroup>
-  ```js Node theme={null}
-  const result = await firecrawl.scrape('https://example.com/product', {
-    formats: [
-      'markdown',
-      {
-        type: 'changeTracking',
-        modes: ['json'],
-        schema: {
-          type: 'object',
-          properties: {
-            price: { type: 'string' },
-            availability: { type: 'string' }
-          }
-        }
-      }
-    ]
-  });
-
-  if (result.changeTracking.changeStatus === 'changed') {
-    console.log(`Price changed from ${result.changeTracking.json.price.previous} to ${result.changeTracking.json.price.current}`);
-  }
+  // Usage
+  const content = await scrapeWithRetry('https://example.com');
+  console.log(content.markdown);
   ```
 
-  ```python Python theme={null}
-  result = firecrawl.scrape('https://example.com/product',
-      formats=[
-          'markdown',
-          {
-              'type': 'change_tracking',
-              'modes': ['json'],
-              'schema': {
-                  'type': 'object',
-                  'properties': {
-                      'price': {'type': 'string'},
-                      'availability': {'type': 'string'}
-                  }
-              }
-          }
-      ]
-  )
+  ```bash cURL theme={null}
+  # First try with default proxy
+  RESPONSE=$(curl -s -X POST https://api.firecrawl.dev/v2/scrape \
+      -H 'Content-Type: application/json' \
+      -H 'Authorization: Bearer YOUR_API_KEY' \
+      -d '{
+        "url": "https://example.com"
+      }')
 
-  if result.change_tracking.change_status == 'changed':
-      print(f"Price changed from {result.change_tracking.json.price.previous} to {result.change_tracking.json.price.current}")
+  # Extract status code from response
+  STATUS_CODE=$(echo $RESPONSE | jq -r '.data.metadata.statusCode')
+
+  # Check if status code indicates we should retry with stealth
+  if [[ "$STATUS_CODE" == "401" || "$STATUS_CODE" == "403" || "$STATUS_CODE" == "500" ]]; then
+      echo "Got status code $STATUS_CODE, retrying with stealth proxy"
+      
+      # Retry with stealth proxy
+      curl -X POST https://api.firecrawl.dev/v2/scrape \
+          -H 'Content-Type: application/json' \
+          -H 'Authorization: Bearer YOUR_API_KEY' \
+          -d '{
+            "url": "https://example.com",
+            "proxy": "stealth"
+          }'
+  else
+      # Output the original response
+      echo $RESPONSE
+  fi
   ```
 </CodeGroup>
 
-### Monitoring Content Changes with Git-Diff
-
-<CodeGroup>
-  ```js Node theme={null}
-  const result = await firecrawl.scrape('https://example.com/blog', {
-    formats: [
-      'markdown',
-      { type: 'changeTracking', modes: ['git-diff'] }
-    ]
-  });
-
-  if (result.changeTracking.changeStatus === 'changed') {
-    console.log('Content changes:');
-    console.log(result.changeTracking.diff.text);
-  }
-  ```
-
-  ```python Python theme={null}
-  result = firecrawl.scrape('https://example.com/blog',
-      formats=[
-          'markdown',
-          { 'type': 'change_tracking', 'modes': ['git-diff'] }
-      ]
-  )
-
-  if result.change_tracking.change_status == 'changed':
-      print('Content changes:')
-      print(result.change_tracking.diff.text)
-  ```
-</CodeGroup>
-
-## Billing
-
-The change tracking feature is currently in beta. Using the basic change tracking functionality and `git-diff` mode has no additional cost. However, if you use the `json` mode for structured data comparison, the page scrape will cost 5 credits per page.
+This approach allows you to optimize your credit usage by only using stealth mode when necessary.
 
 
 ---
