@@ -52,6 +52,17 @@
       },
       "keywords": ["openrouter", "api", "llm", "routing", "providers", "ai"],
       "category": "api-documentation"
+    },
+    {
+      "name": "firecrawl",
+      "source": "./firecrawl",
+      "description": "Firecrawl API documentation for web scraping, crawling, and data extraction",
+      "version": "1.0.0",
+      "author": {
+        "name": "Yan-Yu-Lin"
+      },
+      "keywords": ["firecrawl", "api", "web-scraping", "crawling", "data-extraction", "ai"],
+      "category": "api-documentation"
     }
   ]
 }

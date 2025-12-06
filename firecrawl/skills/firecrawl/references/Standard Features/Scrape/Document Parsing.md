@@ -1,0 +1,77 @@
+# Document Parsing
+
+> Learn about document parsing capabilities.
+
+Firecrawl provides powerful document parsing capabilities, allowing you to extract structured content from various document formats. This feature is particularly useful for processing files like spreadsheets, Word documents, and more.
+
+## Supported Document Formats
+
+Firecrawl currently supports the following document formats:
+
+* **Excel Spreadsheets** (`.xlsx`, `.xls`)
+  * Each worksheet is converted to an HTML table
+  * Worksheets are separated by H2 headings with the sheet name
+  * Preserves cell formatting and data types
+
+* **Word Documents** (`.docx`, `.doc`, `.odt`, `.rtf`)
+  * Extracts text content while preserving document structure
+  * Maintains headings, paragraphs, lists, and tables
+  * Preserves basic formatting and styling
+
+* **PDF Documents** (`.pdf`)
+  * Extracts text content with layout information
+  * Preserves document structure including sections and paragraphs
+  * Handles both text-based and scanned PDFs (with OCR support)
+  * Priced at 1 credit per-page. See [Pricing](https://docs.firecrawl.dev/pricing) for details.
+
+## How to Use Document Parsing
+
+Document parsing in Firecrawl works automatically when you provide a URL that points to a supported document type. The system will detect the file type based on the URL extension or content-type header and process it accordingly.
+
+### Example: Scraping an Excel File
+
+```js Node theme={null}
+import Firecrawl from '@mendable/firecrawl-js';
+
+const firecrawl = new Firecrawl({ apiKey: "fc-YOUR-API-KEY" });
+
+const doc = await firecrawl.scrape('https://example.com/data.xlsx');
+
+console.log(doc.markdown);
+```
+
+### Example: Scraping a Word Document
+
+```js Node theme={null}
+import Firecrawl from '@mendable/firecrawl-js';
+
+const firecrawl = new Firecrawl({ apiKey: "fc-YOUR-API-KEY" });
+
+const doc = await firecrawl.scrape('https://example.com/data.docx');
+
+console.log(doc.markdown);
+```
+
+## Output Format
+
+All supported document types are converted to clean, structured markdown. For example, an Excel file with multiple sheets might be converted to:
+
+```markdown  theme={null}
+## Sheet1
+
+| Name  | Value |
+|-------|-------|
+| Item 1 | 100   |
+| Item 2 | 200   |
+
+## Sheet2
+
+| Date       | Description  |
+|------------|--------------|
+| 2023-01-01 | First quarter|
+```
+
+
+---
+
+> To find navigation and other pages in this documentation, fetch the llms.txt file at: https://docs.firecrawl.dev/llms.txt

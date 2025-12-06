@@ -1,0 +1,227 @@
+# Rate Limits
+
+> Rate limits for different pricing plans and API requests
+
+## Concurrent Browser Limits
+
+Concurrent browsers represent how many web pages Firecrawl can process for you at the same time.
+Your plan determines how many of these jobs can run simultaneously - if you exceed this limit,
+additional jobs will wait in a queue until resources become available.
+
+### Current Plans
+
+<div style={{ overflowX: 'auto', maxWidth: '100%' }}>
+  <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+    <thead>
+      <tr>
+        <th style={{ padding: '8px 12px', textAlign: 'left' }}>Plan</th>
+        <th style={{ padding: '8px 12px' }}>Concurrent Browsers</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td style={{ padding: '8px 12px' }}>Free</td>
+        <td style={{ padding: '8px 12px' }}>2</td>
+      </tr>
+
+      <tr>
+        <td style={{ padding: '8px 12px' }}>Hobby</td>
+        <td style={{ padding: '8px 12px' }}>5</td>
+      </tr>
+
+      <tr>
+        <td style={{ padding: '8px 12px' }}>Standard</td>
+        <td style={{ padding: '8px 12px' }}>50</td>
+      </tr>
+
+      <tr>
+        <td style={{ padding: '8px 12px' }}>Growth</td>
+        <td style={{ padding: '8px 12px' }}>100</td>
+      </tr>
+
+      <tr>
+        <td style={{ padding: '8px 12px' }}>Scale / Enterprise</td>
+        <td style={{ padding: '8px 12px' }}>150+</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+If you require higher concurrency limits, please contact us at [help@firecrawl.com](mailto:help@firecrawl.com) to discuss custom plans.
+
+### Extract Plans (Legacy)
+
+<div style={{ overflowX: 'auto', maxWidth: '100%' }}>
+  <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+    <thead>
+      <tr>
+        <th style={{ padding: '8px 12px', textAlign: 'left' }}>Plan</th>
+        <th style={{ padding: '8px 12px', textAlign: 'left' }}>Concurrent Browsers</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td style={{ padding: '8px 12px' }}>Free</td>
+        <td style={{ padding: '8px 12px' }}>2</td>
+      </tr>
+
+      <tr>
+        <td style={{ padding: '8px 12px' }}>Starter</td>
+        <td style={{ padding: '8px 12px' }}>50</td>
+      </tr>
+
+      <tr>
+        <td style={{ padding: '8px 12px' }}>Explorer</td>
+        <td style={{ padding: '8px 12px' }}>100</td>
+      </tr>
+
+      <tr>
+        <td style={{ padding: '8px 12px' }}>Pro</td>
+        <td style={{ padding: '8px 12px' }}>200</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+## API Rate Limits
+
+Rate limits are measured in requests per minute and are primarily in place to prevent abuse. When configured correctly, your real bottleneck will be concurrent browsers.
+
+### Current Plans
+
+<div style={{ overflowX: 'auto', maxWidth: '100%' }}>
+  <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+    <thead>
+      <tr>
+        <th style={{ padding: '8px 12px', textAlign: 'left' }}>Plan</th>
+        <th style={{ padding: '8px 12px', textAlign: 'left' }}>/scrape</th>
+        <th style={{ padding: '8px 12px', textAlign: 'left' }}>/map</th>
+        <th style={{ padding: '8px 12px', textAlign: 'left' }}>/search</th>
+        <th style={{ padding: '8px 12px', textAlign: 'left' }}>/crawl</th>
+        <th style={{ padding: '8px 12px', textAlign: 'left' }}>/extract</th>
+        <th style={{ padding: '8px 12px', textAlign: 'left' }}>/crawl/status</th>
+        <th style={{ padding: '8px 12px', textAlign: 'left' }}>/extract/status</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td style={{ padding: '8px 12px' }}>Free</td>
+        <td style={{ padding: '8px 12px' }}>10</td>
+        <td style={{ padding: '8px 12px' }}>10</td>
+        <td style={{ padding: '8px 12px' }}>1</td>
+        <td style={{ padding: '8px 12px' }}>5</td>
+        <td style={{ padding: '8px 12px' }}>10</td>
+        <td style={{ padding: '8px 12px' }}>1500</td>
+        <td style={{ padding: '8px 12px' }}>500</td>
+      </tr>
+
+      <tr>
+        <td style={{ padding: '8px 12px' }}>Hobby</td>
+        <td style={{ padding: '8px 12px' }}>100</td>
+        <td style={{ padding: '8px 12px' }}>100</td>
+        <td style={{ padding: '8px 12px' }}>15</td>
+        <td style={{ padding: '8px 12px' }}>50</td>
+        <td style={{ padding: '8px 12px' }}>100</td>
+        <td style={{ padding: '8px 12px' }}>1500</td>
+        <td style={{ padding: '8px 12px' }}>25000</td>
+      </tr>
+
+      <tr>
+        <td style={{ padding: '8px 12px' }}>Standard</td>
+        <td style={{ padding: '8px 12px' }}>500</td>
+        <td style={{ padding: '8px 12px' }}>500</td>
+        <td style={{ padding: '8px 12px' }}>50</td>
+        <td style={{ padding: '8px 12px' }}>250</td>
+        <td style={{ padding: '8px 12px' }}>500</td>
+        <td style={{ padding: '8px 12px' }}>1500</td>
+        <td style={{ padding: '8px 12px' }}>25000</td>
+      </tr>
+
+      <tr>
+        <td style={{ padding: '8px 12px' }}>Growth</td>
+        <td style={{ padding: '8px 12px' }}>5000</td>
+        <td style={{ padding: '8px 12px' }}>5000</td>
+        <td style={{ padding: '8px 12px' }}>250</td>
+        <td style={{ padding: '8px 12px' }}>2500</td>
+        <td style={{ padding: '8px 12px' }}>1000</td>
+        <td style={{ padding: '8px 12px' }}>1500</td>
+        <td style={{ padding: '8px 12px' }}>25000</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+These rate limits are enforced to ensure fair usage and availability of the API for all users. If you require higher limits, please contact us at [help@firecrawl.com](mailto:help@firecrawl.com) to discuss custom plans.
+
+### Batch Endpoints
+
+Batch endpoints follow the /crawl rate limits.
+
+### FIRE-1 Agent
+
+Requests involving the FIRE-1 agent requests have separate rate limits that are counted independently for each endpoint:
+
+<div style={{ overflowX: 'auto', maxWidth: '100%' }}>
+  <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+    <thead>
+      <tr>
+        <th style={{ padding: '8px 12px', textAlign: 'left' }}>Endpoint</th>
+        <th style={{ padding: '8px 12px', textAlign: 'left' }}>Rate Limit (requests/min)</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td style={{ padding: '8px 12px' }}>/scrape</td>
+        <td style={{ padding: '8px 12px' }}>10</td>
+      </tr>
+
+      <tr>
+        <td style={{ padding: '8px 12px' }}>/extract</td>
+        <td style={{ padding: '8px 12px' }}>10</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+### Extract Plans (Legacy)
+
+<div style={{ overflowX: 'auto', maxWidth: '100%' }}>
+  <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+    <thead>
+      <tr>
+        <th style={{ padding: '8px 12px', textAlign: 'left' }}>Plan</th>
+        <th style={{ padding: '8px 12px', textAlign: 'left' }}>/extract (requests/min)</th>
+        <th style={{ padding: '8px 12px', textAlign: 'left' }}>/extract/status (requests/min)</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td style={{ padding: '8px 12px' }}>Starter</td>
+        <td style={{ padding: '8px 12px' }}>100</td>
+        <td style={{ padding: '8px 12px' }}>25000</td>
+      </tr>
+
+      <tr>
+        <td style={{ padding: '8px 12px' }}>Explorer</td>
+        <td style={{ padding: '8px 12px' }}>500</td>
+        <td style={{ padding: '8px 12px' }}>25000</td>
+      </tr>
+
+      <tr>
+        <td style={{ padding: '8px 12px' }}>Pro</td>
+        <td style={{ padding: '8px 12px' }}>1000</td>
+        <td style={{ padding: '8px 12px' }}>25000</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+---
+
+> To find navigation and other pages in this documentation, fetch the llms.txt file at: https://docs.firecrawl.dev/llms.txt
