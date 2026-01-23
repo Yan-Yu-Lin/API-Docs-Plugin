@@ -1,7 +1,7 @@
 {
   "name": "anthropic",
-  "version": "1.0.0",
-  "description": "Anthropic API documentation and MCP expertise, including Model Context Protocol",
+  "version": "1.1.0",
+  "description": "Anthropic documentation: Model Context Protocol (MCP) and Claude Agent SDK for building autonomous AI agents",
   "author": {
     "name": "Yan-Yu-Lin",
     "email": "arthur.lin.0906@gmail.com"
@@ -11,7 +11,10 @@
     "api",
     "mcp",
     "model-context-protocol",
-    "ai",
+    "claude-agent-sdk",
+    "agent-sdk",
+    "ai-agents",
+    "tool-use",
     "documentation"
   ],
   "license": "MIT"
