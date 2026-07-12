@@ -63,6 +63,17 @@
       },
       "keywords": ["firecrawl", "api", "web-scraping", "crawling", "data-extraction", "ai"],
       "category": "api-documentation"
+    },
+    {
+      "name": "drg-cd2",
+      "source": "./drg-cd2",
+      "description": "Deep Rock Galactic Custom Difficulty 2 unofficial documentation for modded difficulty settings and enemy scaling",
+      "version": "1.0.0",
+      "author": {
+        "name": "Yan-Yu-Lin"
+      },
+      "keywords": ["deep-rock-galactic", "drg", "custom-difficulty", "cd2", "modding", "game"],
+      "category": "game-documentation"
     }
   ]
 }
